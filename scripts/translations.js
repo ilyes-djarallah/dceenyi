@@ -1361,7 +1361,18 @@ const translations = {
       "Final Render: Final export in high quality (images, video, presentation).",
 
     rhd5BonusTitle: "Bonus Content",
-    rhd5Bonus1: "3D Object Library and Plugins.", // Synthesized as standard bonus based on context
+    rhd5Bonus1: "3D Object Library and Plugins.",
+
+    dsmaxcr: "3Ds Max & Corona Renderer - From Modeling to Realistic Rendering",
+    dsmaxcrsub: "Complete Workflow for Architectural Visualization",
+    dsmaxcrdesc:
+      "Master the complete workflow of architectural visualization using 3Ds Max and Corona Renderer. Learn to model, texture, light, and render photorealistic images and animations of architectural projects.",
+
+    // dsmaxcrlevel: "Beginner to Intermediate",
+    dsmaxcrlectures: "30 Lectures",
+    dsmaxcrduration: "25 Hours",
+    dsmaxcrpriceold: "30000 DZD",
+    dsmaxcrpricenew: "14990 DZD",
   },
 
   fr: {
@@ -2816,6 +2827,17 @@ const translations = {
 
     rhd5BonusTitle: "Contenu complémentaire", // Standard key
     rhd5Bonus1: "Bibliothèque d'objets 3D et Plugins.",
+
+    dsmaxcr: "3Ds Max & Corona Renderer - Workflow Complet pour la Visualisation Architecturale",
+    dsmaxcrsub: "Flux de travail complet pour la visualisation architecturale",
+    dsmaxcrdesc:
+      "Maîtrisez l'intégralité du flux de travail de la visualisation architecturale avec 3ds Max et Corona Renderer. Apprenez à modéliser, texturer, éclairer et rendre des images et animations photoréalistes de projets architecturaux.",
+
+    // dsmaxcrlevel: "Beginner to Intermediate",
+    dsmaxcrlectures: "30 Lectures",
+    dsmaxcrduration: "25 Hours",
+    dsmaxcrpriceold: "30000 DZD",
+    dsmaxcrpricenew: "14990 DZD",
   },
 
   ar: {
