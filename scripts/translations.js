@@ -4151,6 +4151,18 @@ const translations = {
 
     rhd5BonusTitle: "محتوى إضافي", // Standard key
     rhd5Bonus1: "مكتبة كائنات ثلاثية الأبعاد وإضافات.", // Synthesized
+
+
+        dsmaxcr: "دورة كاملة: سير العمل 3ds Max + Corona Renderer للعرض المعماري",
+    dsmaxcrsub: "من النمذجة إلى الرندرة الواقعية للمشاريع المعمارية",
+    dsmaxcrdesc:
+      "أتقن سير العمل الكامل لتصور المشاريع المعمارية باستخدام 3ds Max وCorona Renderer. تعلم كيفية النمذجة، التلوين، الإضاءة، وإنشاء صور ورسوم متحركة فوتورالية للمشاريع المعمارية.",
+
+    // dsmaxcrlevel: "Beginner to Intermediate",
+    dsmaxcrlectures: "30 دروس",
+    dsmaxcrduration: "25 ساعة",
+    dsmaxcrpriceold: "30000 دج",
+    dsmaxcrpricenew: "14990 دج",
   },
 };
 
