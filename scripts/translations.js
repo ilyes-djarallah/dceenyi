@@ -823,7 +823,7 @@ const translations = {
     // SKETCHUP + D5 RENDER
     // ===============================
     d5CourseTitle:
-      "SketchUp & D5 Render Architecture: 3D Modeling to Photorealistic Rendering",
+      "SketchUp & D5 Render Architecture: 3D Modeling to Rendering",
     d5CourseShortDesc: "Master real-time rendering with SketchUp and D5.",
     d5CourseLongDesc:
       "This course guides you from the fundamentals of SketchUp modeling to advanced real-time rendering and animation in D5 Render. Learn to prepare your models, apply PBR materials, set up professional lighting, and create final images and animations.",
