@@ -2828,7 +2828,8 @@ const translations = {
     rhd5BonusTitle: "Contenu complémentaire", // Standard key
     rhd5Bonus1: "Bibliothèque d'objets 3D et Plugins.",
 
-    dsmaxcr: "3Ds Max & Corona Renderer - Workflow Complet pour la Visualisation Architecturale",
+    dsmaxcr:
+      "3Ds Max & Corona Renderer - Workflow Complet pour la Visualisation Architecturale",
     dsmaxcrsub: "Flux de travail complet pour la visualisation architecturale",
     dsmaxcrdesc:
       "Maîtrisez l'intégralité du flux de travail de la visualisation architecturale avec 3ds Max et Corona Renderer. Apprenez à modéliser, texturer, éclairer et rendre des images et animations photoréalistes de projets architecturaux.",
@@ -4152,8 +4153,7 @@ const translations = {
     rhd5BonusTitle: "محتوى إضافي", // Standard key
     rhd5Bonus1: "مكتبة كائنات ثلاثية الأبعاد وإضافات.", // Synthesized
 
-
-        dsmaxcr: "دورة كاملة: سير العمل 3ds Max + Corona Renderer للعرض المعماري",
+    dsmaxcr: "دورة كاملة: سير العمل 3ds Max + Corona Renderer للعرض المعماري",
     dsmaxcrsub: "من النمذجة إلى الرندرة الواقعية للمشاريع المعمارية",
     dsmaxcrdesc:
       "أتقن سير العمل الكامل لتصور المشاريع المعمارية باستخدام 3ds Max وCorona Renderer. تعلم كيفية النمذجة، التلوين، الإضاءة، وإنشاء صور ورسوم متحركة فوتورالية للمشاريع المعمارية.",
