@@ -6,19 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Archicad 2D/3D + Lumion Course | Dceeny Education</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <link rel="stylesheet" href="style.css" />
-  <script src="scripts/translations.js"></script>
-  <script src="courses.js"></script>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../scripts/translations.js"></script>
+  <script src="../courses.js"></script>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
 </head>
 
 <script>
   $(document).ready(function () {
-    $("#header-container").load("elements/headerDark.html", function () {
+    $("#header-container").load("../elements/headerDark.html", function () {
       const savedLanguage = localStorage.getItem("preferredLanguage") || "en";
       applyTranslations(savedLanguage);
     });
@@ -27,7 +27,7 @@
 
 <script>
   $(function () {
-    $("#darkFooter").load("elements/footerDark.html", function () {
+    $("#darkFooter").load("../elements/footerDark.html", function () {
       applyTranslations(localStorage.getItem("preferredLanguage") || "en");
     });
   });
@@ -51,7 +51,7 @@
 
           <h3 class="course-title" data-translate="acTitle"></h3>
           <div class="course-thumb">
-            <img src="assets/images/formation assets/archicad-lumion.webp" alt="Archicad Lumion course" />
+            <img src="../assets/images/formation assets/archicad-lumion.webp" alt="Archicad Lumion course" />
           </div>
           <p class="course-sub" data-translate="acCourseShortDesc"></p>
           <div class="long-desc" data-translate="acCourseLongDesc"></div>
@@ -189,7 +189,7 @@
         <aside class="sidebar">
           <div class="side-card">
             <div class="course-thumb">
-              <img src="assets/images/formation assets/archicad-lumion.webp" alt="Archicad Lumion course" />
+              <img src="../assets/images/formation assets/archicad-lumion.webp" alt="Archicad Lumion course" />
             </div>
 
             <div class="info-grid">
