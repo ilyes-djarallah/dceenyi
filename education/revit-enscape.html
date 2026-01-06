@@ -18,7 +18,7 @@
 
 <script>
   $(document).ready(function () {
-    $("#header-container").load("./elements/headerDark.html", function () {
+    $("#header-container").load("../elements/headerDark.html", function () {
       const savedLanguage = localStorage.getItem("preferredLanguage") || "en";
       applyTranslations(savedLanguage);
     });
@@ -27,7 +27,7 @@
 
 <script>
   $(function () {
-    $("#darkFooter").load("./elements/footerDark.html", function () {
+    $("#darkFooter").load("../elements/footerDark.html", function () {
       applyTranslations(localStorage.getItem("preferredLanguage") || "en");
     });
   });
