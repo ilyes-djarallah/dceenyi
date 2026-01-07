@@ -1,296 +1,311 @@
-// ============================================================
-// LOADING SCREEN
-// ============================================================
+/* ==========================================================
+   GLOBAL INITIALIZATION
+========================================================== */
+
 document.addEventListener("DOMContentLoaded", () => {
-  window.onload = () => {
-    const loadingScreen = document.getElementById("loading-screen");
-    const content = document.getElementById("content");
+  initLoadingScreen();
+  initHeaderFooter();
+  initNavbar();
+  initScrollToTop();
+  initSlideshow();
+  initSmoothScroll();
+  initBuyOverlay();
+  initCourseSearch();
+  initCourseCardNavigation();
+  initCourseChapters();
+});
 
-    loadingScreen.style.transition = "opacity 0.5s";
-    loadingScreen.style.opacity = "0";
+/* ==========================================================
+   1. LOADING SCREEN
+========================================================== */
 
+function initLoadingScreen() {
+  const loader = document.getElementById("loading-screen");
+  const content = document.getElementById("content");
+  if (!loader) return;
+
+  window.addEventListener("load", () => {
+    loader.style.transition = "opacity 0.5s";
+    loader.style.opacity = "0";
     setTimeout(() => {
-      loadingScreen.style.display = "none";
+      loader.style.display = "none";
       if (content) content.style.display = "block";
     }, 500);
-  };
-});
+  });
+}
 
-// ============================================================
-// PROJECT ORDER OVERLAY
-// ============================================================
-document.addEventListener("DOMContentLoaded", () => {
-  const orderButton = document.getElementById("projects");
-  const orderOverlay = document.getElementById("orderOverlay");
-  const closeOverlay = document.getElementById("closeOverlay");
+/* ==========================================================
+   2. HEADER & FOOTER LOADER (jQuery)
+========================================================== */
 
-  if (orderButton && orderOverlay && closeOverlay) {
-    orderButton.addEventListener("click", () => {
-      orderOverlay.style.display = "flex";
-    });
+function initHeaderFooter() {
+  if (typeof $ === "undefined") return;
 
-    closeOverlay.addEventListener("click", () => {
-      orderOverlay.style.display = "none";
-    });
+  const isInsideFolder =
+    location.pathname.includes("/education/") ||
+    location.pathname.includes("/projects/");
 
-    orderOverlay.addEventListener("click", (e) => {
-      if (e.target === orderOverlay) orderOverlay.style.display = "none";
-    });
-  }
-});
+  const pathPrefix = isInsideFolder ? "../" : "";
+  const isDarkPage =
+    document.getElementById("darkFooter") ||
+    location.pathname.includes("education");
 
-// ============================================================
-// SCROLL-TO-TOP BUTTON
-// ============================================================
-document.addEventListener("DOMContentLoaded", () => {
-  const scrollToTopBtn = document.getElementById("scrollToTop");
+  const headerPath = isDarkPage
+    ? "elements/headerDark.html"
+    : "elements/header.html";
+  const footerPath = isDarkPage
+    ? "elements/footerDark.html"
+    : "elements/footer.html";
+  const footerTarget = isDarkPage ? "#darkFooter" : "#footer";
 
-  if (!scrollToTopBtn) return;
+  $("#header-container").load(pathPrefix + headerPath);
+  $(footerTarget).load(pathPrefix + footerPath);
+}
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 500) {
-      scrollToTopBtn.classList.add("show");
-    } else {
-      scrollToTopBtn.classList.remove("show");
+/* ==========================================================
+   3. NAVBAR + DROPDOWNS
+========================================================== */
+
+function initNavbar() {
+  document.addEventListener("click", (e) => {
+    const target = e.target;
+
+    if (target.closest("#hamburger")) {
+      document.getElementById("academyLinks")?.classList.toggle("show-links");
+    }
+
+    if (target.closest("#projects-btn, #academy-courses-btn")) {
+      if (window.innerWidth <= 960) {
+        e.preventDefault();
+        target
+          .closest(".nav-item-container")
+          ?.querySelector(
+            ".dropdown-lge-menu, .academy-dropdown, #projects-dropdown"
+          )
+          ?.classList.toggle("show-dropdown");
+      }
+    }
+
+    if (!target.closest(".nav-item-container, #hamburger")) {
+      document
+        .querySelectorAll(
+          ".dropdown-lge-menu, .academy-dropdown, #projects-dropdown, #academyLinks"
+        )
+        .forEach((el) => el.classList.remove("show-dropdown", "show-links"));
     }
   });
+}
 
-  scrollToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  });
-});
+/* ==========================================================
+   4. SCROLL TO TOP
+========================================================== */
 
-// ============================================================
-// TELEGRAM FORM SUBMISSIONS
-// ============================================================
-document.addEventListener("DOMContentLoaded", function () {
-  function handleFormSubmission(formId, botToken, chatId, type) {
-    const form = document.getElementById(formId);
-    if (!form) return;
+function initScrollToTop() {
+  const btn = document.getElementById("scrollToTop");
+  if (!btn) return;
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+  window.addEventListener("scroll", () =>
+    btn.classList.toggle("show", window.scrollY > 500)
+  );
 
-      const fullName = form.querySelector("#fullName")?.value;
-      const phoneNumber = form.querySelector("#phoneNumber")?.value;
+  btn.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  );
+}
 
-      let isValid = true;
-      const errorMessages = form.querySelectorAll(".error-message");
-      errorMessages.forEach((msg) => (msg.style.display = "none"));
+/* ==========================================================
+   5. SLIDESHOW
+========================================================== */
 
-      if (!fullName) {
-        form.querySelector("#fullName + .error-message").style.display = "block";
-        isValid = false;
-      }
-      if (!phoneNumber) {
-        form.querySelector("#phoneNumber + .error-message").style.display = "block";
-        isValid = false;
-      }
+function initSlideshow() {
+  const slides = document.querySelectorAll(".slide");
+  if (!slides.length) return;
 
-      let message = `*New Submission:*\n- Full Name: ${fullName}\n- Phone Number: ${phoneNumber}`;
+  let index = 0;
+  setInterval(() => {
+    slides.forEach((s) => s.classList.remove("active"));
+    slides[index].classList.add("active");
+    index = (index + 1) % slides.length;
+  }, 3000);
+}
 
-      if (type === "order") {
-        const city = form.querySelector("#city")?.value;
-        const surface = form.querySelector("#surface")?.value;
-        if (!city) {
-          form.querySelector("#city + .error-message").style.display = "block";
-          isValid = false;
-        }
-        message += `\n- City: ${city}\n- Surface: ${surface || "Not provided"}`;
-      } else if (type === "professional") {
-        const profession = form.querySelector("#profession")?.value;
-        if (!profession) {
-          form.querySelector("#profession + .error-message").style.display = "block";
-          isValid = false;
-        }
-        message += `\n- Profession: ${profession}`;
-      }
+/* ==========================================================
+   6. SMOOTH SCROLL DOWN
+========================================================== */
 
-      if (!isValid) return;
+function initSmoothScroll() {
+  window.scrollDown = function () {
+    const start = scrollY;
+    const target = innerHeight;
+    const startTime = performance.now();
+    const duration = 900;
 
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: "Markdown",
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            const formWrapper = form.closest(".form-wrapper");
-            formWrapper.style.height = `${formWrapper.offsetHeight}px`;
-            form.style.display = "none";
-            formWrapper.querySelector(".thank-you-message").style.display = "block";
-          } else {
-            alert("An error occurred. Please try again later.");
-          }
-        })
-        .catch(() => {
-          alert("An error occurred. Please check your internet connection.");
-        });
-    });
-  }
+    function animate(t) {
+      const p = Math.min((t - startTime) / duration, 1);
+      scrollTo(0, start + target * p);
+      if (p < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  };
+}
 
+/* ==========================================================
+   7. BUY COURSE OVERLAY (UNIFIED)
+========================================================== */
+
+function initBuyOverlay() {
+  const overlay = document.getElementById("buyOverlay");
+  const form = document.getElementById("buyCourseForm");
+  if (!overlay || !form) return;
+
+  // ⚠️ Move to backend later
   const botToken = "7526772728:AAE8xfyUfEb-zq1KL3uE0OdYlq4wLVdoPAc";
   const chatId = "7285884938";
 
-  handleFormSubmission("orderForm", botToken, chatId, "order");
-  handleFormSubmission("professionalForm", botToken, chatId, "professional");
-});
-
-// ============================================================
-// SLIDESHOW
-// ============================================================
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slide");
-
-function showSlides() {
-  slides.forEach((slide) => slide.classList.remove("active"));
-  if (slides.length > 0) {
-    slides[currentSlide].classList.add("active");
-    currentSlide = (currentSlide + 1) % slides.length;
-  }
-}
-setInterval(showSlides, 3000);
-window.addEventListener("load", showSlides);
-
-
-// ============================================================
-// NAVBAR DROPDOWN TOGGLE
-// ============================================================
-function toggleDropdown() {
-  const dropdown = document.getElementById("projects-dropdown");
-  if (!dropdown) return;
-
-  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
-
-const projectsBtn = document.getElementById("projects-btn");
-if (projectsBtn) {
-  projectsBtn.addEventListener("click", toggleDropdown);
-}
-
-// Force column layout for small screens
-if (window.innerWidth <= 768) {
-  const navbar = document.querySelector(".navbar");
-  if (navbar) navbar.style.flexDirection = "column";
-}
-
-// ============================================================
-// SMOOTH SCROLL DOWN FUNCTION
-// ============================================================
-function scrollDown() {
-  const scrollTarget = window.innerHeight;
-  const startPosition = window.scrollY;
-  const distance = scrollTarget - startPosition;
-  const duration = 900;
-  const startTime = performance.now();
-
-  function smoothScroll(currentTime) {
-    const timeElapsed = currentTime - startTime;
-    const progress = Math.min(timeElapsed / duration, 1);
-    const newPosition = startPosition + distance * progress;
-    window.scrollTo(0, newPosition);
-    if (progress < 1) requestAnimationFrame(smoothScroll);
-  }
-
-  requestAnimationFrame(smoothScroll);
-}
-
-// ============================================================
-// COURSE BUY BUTTON DEMO ALERT
-// ============================================================
-  // Buy button demo
-  // document.body.addEventListener("click", (e) => {
-  //   const btn = e.target.closest(".buy-btn");
-  //   if (!btn) return;
-  //   e.preventDefault();
-  //   const card = btn.closest(".course-card");
-  //   const title = card?.querySelector(".course-title")?.textContent || "Course";
-  //   alert(`Buying: ${title}`);
-  // });
-
-// ============================================================
-// GALLERY SLIDESHOW
-// ============================================================
-
-  const gallerySlides = document.querySelectorAll(".gallery-slide");
-  const dots = document.querySelectorAll(".gallery-dots .dot");
-  const prevBtn = document.querySelector(".gallery-prev");
-  const nextBtn = document.querySelector(".gallery-next");
-  const caption = document.querySelector(".gallery-caption");
-  let currentGalleryIndex = 0;
-
-  function showGallerySlide(index) {
-    gallerySlides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === index);
-      dots[i].classList.toggle("active", i === index);
-    });
-    caption.textContent = gallerySlides[index].dataset.caption || "";
-  }
-
-  function nextGallerySlide() {
-    currentGalleryIndex = (currentGalleryIndex + 1) % gallerySlides.length;
-    showGallerySlide(currentGalleryIndex);
-  }
-
-  function prevGallerySlide() {
-    currentGalleryIndex =
-      (currentGalleryIndex - 1 + gallerySlides.length) % gallerySlides.length;
-    showGallerySlide(currentGalleryIndex);
-  }
-
-  nextBtn.addEventListener("click", nextGallerySlide);
-  prevBtn.addEventListener("click", prevGallerySlide);
-
-  dots.forEach((dot, i) =>
-    dot.addEventListener("click", () => {
-      currentGalleryIndex = i;
-      showGallerySlide(i);
-    })
-  );
-
-  // Initialize caption and auto-slide
-  showGallerySlide(0);
-  setInterval(nextGallerySlide, 5000);
-
-// ====== HAMBURGER TOGGLE ======
-const hamburger = document.getElementById("hamburger");
-const academyLinks = document.getElementById("academyLinks");
-
-if (hamburger && academyLinks) {
-  hamburger.addEventListener("click", () => {
-    academyLinks.classList.toggle("show-links");
-  });
-}
-
-// ====== DROPDOWN (Courses & Training) ======
-const academyCoursesBtn = document.getElementById("academy-courses-btn");
-const academyDropdown = document.getElementById("academy-dropdown");
-
-if (academyCoursesBtn && academyDropdown) {
-  academyCoursesBtn.addEventListener("click", (e) => {
-    // Only trigger dropdown on mobile
-    if (window.innerWidth <= 960) {
-      e.preventDefault();
-      e.stopPropagation();
-      academyDropdown.classList.toggle("show-dropdown");
-    }
-  });
-
-  // Close dropdown if user clicks outside
   document.addEventListener("click", (e) => {
-    if (
-      !academyDropdown.contains(e.target) &&
-      !academyCoursesBtn.contains(e.target)
-    ) {
-      academyDropdown.classList.remove("show-dropdown");
-    }
+    const btn = e.target.closest(".buy-btn");
+    if (!btn) return;
+
+    e.preventDefault();
+
+    const card = btn.closest(".course-card");
+    const title =
+      btn.dataset.courseTitle ||
+      card?.querySelector(".course-title")?.textContent.trim() ||
+      document.querySelector(".content-card .course-title")?.textContent.trim() ||
+      "Unknown Course";
+
+    document.getElementById("buyCourseTitle").value = title;
+    overlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  });
+
+  document.getElementById("closeBuyOverlay")?.addEventListener("click", close);
+  overlay.addEventListener("click", (e) => e.target === overlay && close());
+
+  function close() {
+    overlay.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: buyName.value.trim(),
+      phone: buyPhone.value.trim(),
+      city: buyCity.value.trim(),
+      type: buyCourseType.value,
+      course: buyCourseTitle.value.trim(),
+      message: buyMessage.value.trim() || "None",
+    };
+
+    if (!data.name || !data.phone || !data.city || !data.type) return;
+
+    const text = `*New Course Purchase*\n
+📘 ${data.course}
+🎓 ${data.type}
+👤 ${data.name}
+📞 ${data.phone}
+📍 ${data.city}
+📝 ${data.message}`;
+
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" }),
+    });
+
+    form.style.display = "none";
+    overlay.querySelector(".buy-thank-you").style.display = "block";
   });
 }
 
+/* ==========================================================
+   8. COURSE SEARCH
+========================================================== */
+
+function initCourseSearch() {
+  const search = document.getElementById("search");
+  if (!search) return;
+
+  search.addEventListener("input", () => {
+    const q = search.value.toLowerCase();
+    document.querySelectorAll(".course-card").forEach((card) => {
+      card.style.display = card.textContent.toLowerCase().includes(q)
+        ? ""
+        : "none";
+    });
+  });
+}
+
+/* ==========================================================
+   9. COURSE CARD NAVIGATION
+========================================================== */
+
+function initCourseCardNavigation() {
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".buy-btn")) return;
+    const card = e.target.closest(".course-card");
+    if (card?.dataset.link) location.href = card.dataset.link;
+  });
+}
+
+/* ==========================================================
+   10. COURSE COLLAPSIBLE CHAPTERS
+========================================================== */
+
+function initCourseChapters() {
+  document.addEventListener("click", (e) => {
+    const chapter = e.target.closest(".chapter.collapsible");
+    if (!chapter) return;
+
+    const index = chapter.dataset.index;
+    const list = document.getElementById(`episodes-${index}`);
+    if (!list) return;
+
+    const open = chapter.getAttribute("aria-expanded") === "true";
+
+    document.querySelectorAll(".chapter.collapsible").forEach((c) => {
+      c.setAttribute("aria-expanded", "false");
+      c.classList.remove("open");
+    });
+
+    document.querySelectorAll(".episode-list").forEach((l) => {
+      l.setAttribute("aria-hidden", "true");
+      l.style.maxHeight = null;
+    });
+
+    if (!open) {
+      chapter.setAttribute("aria-expanded", "true");
+      chapter.classList.add("open");
+      list.setAttribute("aria-hidden", "false");
+      list.style.maxHeight = list.scrollHeight + "px";
+    }
+  });
+}
+/* ==========================================================
+   STICKY BUY BAR (MOBILE SAFE) — OPTIMAL
+========================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const stickyBar = document.querySelector(".sticky-buy-bar");
+  const sidebarBuy = document.querySelector(".sidebar .buy-btn");
+  
+  if (!stickyBar || !sidebarBuy) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      stickyBar.classList.toggle("hide-sticky", entry.isIntersecting);
+    },
+    { 
+      threshold: 0.15,  // Slightly finer than 0.2 for smoother mobile trigger
+      rootMargin: '0px' // Explicit for consistency
+    }
+  );
+  
+  observer.observe(sidebarBuy);
+
+  document.getElementById("stickyBuyBtn")?.addEventListener("click", () => {
+    sidebarBuy.click();
+  });
+});
